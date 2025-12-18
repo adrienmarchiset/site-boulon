@@ -132,7 +132,7 @@ export default function BoulonSite() {
             fontStyle: 'italic',
             letterSpacing: '0.1em'
           }}>
-            ~ Le vrai secret est dans les détails ~
+            ~ Si tu n'as pas un boulon à 50 ans, tu as raté ta vie ~
           </p>
 
           <div 
@@ -308,7 +308,7 @@ export default function BoulonSite() {
             }}
           >
             <img 
-              src="https://images.unsplash.com/photo-1572517190154-319a4818eb0e?w=800&h=400&fit=crop" 
+              src="/images.jpg" 
               alt="Boulons en action" 
               className="w-full h-full object-cover"
             />
