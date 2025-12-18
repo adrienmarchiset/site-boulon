@@ -6,11 +6,25 @@ import { Zap, Sparkles, Heart } from 'lucide-react';
 export default function BoulonSite() {
   const [scrollY, setScrollY] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [sparkles, setSparkles] = useState([]);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
     const handleMouseMove = (e) => {
       setMousePos({ x: e.clientX, y: e.clientY });
+      
+      // Créer des paillettes au mouvement de la souris
+      if (Math.random() > 0.7) {
+        const colors = ['#FF00FF', '#00FFFF', '#FFFF00', '#FF0080', '#00FF80', '#FF8000'];
+        const newSparkle = {
+          id: Date.now() + Math.random(),
+          x: e.clientX,
+          y: e.clientY,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          size: Math.random() * 3 + 2
+        };
+        setSparkles(prev => [...prev.slice(-30), newSparkle]);
+      }
     };
     
     window.addEventListener('scroll', handleScroll);
@@ -40,6 +54,38 @@ export default function BoulonSite() {
         transition: 'background 0.1s ease-out'
       }}
     >
+      {/* Paillettes animées */}
+      <div className="fixed inset-0 pointer-events-none z-50">
+        {sparkles.map(sparkle => (
+          <div
+            key={sparkle.id}
+            className="absolute rounded-full animate-pulse"
+            style={{
+              left: sparkle.x,
+              top: sparkle.y,
+              width: sparkle.size,
+              height: sparkle.size,
+              backgroundColor: sparkle.color,
+              boxShadow: `0 0 ${sparkle.size * 3}px ${sparkle.color}`,
+              animation: 'sparkleFloat 1s ease-out forwards',
+              opacity: 0.8
+            }}
+          />
+        ))}
+      </div>
+
+      <style>{`
+        @keyframes sparkleFloat {
+          0% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+          100% {
+            opacity: 0;
+            transform: translateY(-50px) scale(0);
+          }
+        }
+      `}</style>
       {/* Header Hero */}
       <header className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 opacity-20">
@@ -86,7 +132,7 @@ export default function BoulonSite() {
             fontStyle: 'italic',
             letterSpacing: '0.1em'
           }}>
-            ~ Si à 50 ans on n'a pas un boulon, on a quand même raté sa vie ~
+            ~ Le vrai secret est dans les détails ~
           </p>
 
           <div 
@@ -262,11 +308,11 @@ export default function BoulonSite() {
             }}
           >
             <img 
-              src="/images.jpg" 
+              src="https://images.unsplash.com/photo-1572517190154-319a4818eb0e?w=800&h=400&fit=crop" 
               alt="Boulons en action" 
-              className="object-cover object-center scale-90"
+              className="w-full h-full object-cover"
             />
-            <div className="object-cover object-center scale-90">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end">
               <p className="text-white text-2xl font-bold p-8">Assemblés. Unis. Indestructibles.</p>
             </div>
           </div>
