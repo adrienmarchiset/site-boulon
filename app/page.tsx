@@ -264,9 +264,9 @@ export default function BoulonSite() {
             <img 
               src="/images.jpg" 
               alt="Boulons en action" 
-              className="w-full h-full object-cover"
+              className="object-cover object-center scale-90"
             />
-            <div className="relative aspect-video w-full rounded-2xl overflow-hidden">
+            <div className="object-cover object-center scale-90">
               <p className="text-white text-2xl font-bold p-8">Assemblés. Unis. Indestructibles.</p>
             </div>
           </div>
