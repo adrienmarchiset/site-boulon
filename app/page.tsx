@@ -1,143 +1,233 @@
-
 'use client';
 
-
-
 import React, { useState, useEffect } from 'react';
-import { Wrench, Zap, Trophy, ArrowDown } from 'lucide-react';
+import { Zap, Sparkles, Heart } from 'lucide-react';
 
-export default function FuretPlomberie() {
+export default function BoulonSite() {
   const [scrollY, setScrollY] = useState(0);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
+    const handleMouseMove = (e) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+    
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
   }, []);
 
+  // Gradient qui change selon le scroll
+  const getBackgroundGradient = () => {
+    const scroll = Math.min(scrollY / 2000, 1);
+    return `linear-gradient(135deg, 
+      hsl(${290 + scroll * 40}, 100%, 50%) 0%,
+      hsl(${320 + scroll * 20}, 100%, 50%) 25%,
+      hsl(${180 - scroll * 50}, 100%, 50%) 50%,
+      hsl(${40 + scroll * 40}, 100%, 50%) 75%,
+      hsl(${290 + scroll * 30}, 100%, 50%) 100%)`;
+  };
+
   return (
-    <div className="overflow-hidden bg-white">
+    <div 
+      className="overflow-hidden"
+      style={{
+        background: getBackgroundGradient(),
+        transition: 'background 0.1s ease-out'
+      }}
+    >
       {/* Header Hero */}
-      <header className="relative h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-orange-50 via-blue-50 to-blue-100">
-        <div className="absolute inset-0 overflow-hidden">
+      <header className="relative h-screen flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 opacity-20">
           <div 
-            className="absolute text-9xl opacity-10"
-            style={{ transform: `translateY(${scrollY * 0.5}px)` }}
+            className="absolute text-9xl font-bold"
+            style={{ 
+              transform: `translateY(${scrollY * 0.3}px) rotate(${scrollY * 0.05}deg)`,
+              top: '50%',
+              left: '50%',
+              marginLeft: '-100px',
+              marginTop: '-100px'
+            }}
           >
-            🔧
+            ⚙️
           </div>
         </div>
         
-        <div className="relative z-10 text-center px-6 max-w-2xl">
-          <div className="inline-block mb-8" style={{ animation: 'bounce 2s infinite' }}>
-            <Wrench className="w-24 h-24 text-orange-500" />
+        <div className="relative z-10 text-center px-6 max-w-3xl">
+          <div 
+            className="inline-block mb-8"
+            style={{
+              animation: 'pulse 2s infinite',
+              filter: 'drop-shadow(0 0 20px rgba(255,255,255,0.8))'
+            }}
+          >
+            <Zap className="w-32 h-32 text-white drop-shadow-lg" />
           </div>
           
-          <h1 className="text-6xl md:text-7xl font-bold text-blue-900 mb-6">
-            Les Furets en Plomberie
+          <h1 className="text-8xl md:text-9xl font-black text-white mb-8 drop-shadow-lg" style={{
+            textShadow: '0 0 30px rgba(255, 0, 255, 0.8), 0 0 60px rgba(0, 255, 255, 0.6)',
+            letterSpacing: '0.05em'
+          }}>
+            LE BOULON
           </h1>
           
-          <p className="text-2xl md:text-3xl text-orange-600 font-semibold mb-8">
-            Votre solution simple et efficace pour déboucher vos canalisations
+          <p className="text-2xl md:text-4xl text-white font-bold mb-6 drop-shadow-lg" style={{
+            textShadow: '0 0 20px rgba(255, 255, 0, 0.8)',
+          }}>
+            L'élément indispensable pour réussir
           </p>
           
-          <p className="text-lg text-gray-600 mb-12 leading-relaxed">
-            Découvrez l'outil incontournable des plombiers professionnels
+          <p className="text-xl md:text-2xl text-white italic font-light mb-12 drop-shadow-lg" style={{
+            textShadow: '0 0 15px rgba(0, 255, 255, 0.8)',
+            fontStyle: 'italic',
+            letterSpacing: '0.1em'
+          }}>
+            ~ Si à 50 ans on n'a pas un boulon, on a quand même raté sa vie ~
           </p>
 
-          <div style={{ animation: 'float 3s ease-in-out infinite' }}>
-            <ArrowDown className="w-8 h-8 text-blue-600 mx-auto" />
+          <div 
+            style={{ animation: 'float 3s ease-in-out infinite' }}
+            className="text-white text-4xl"
+          >
+            ↓
           </div>
 
           <style>{`
-            @keyframes bounce {
-              0%, 100% { transform: translateY(0); }
-              50% { transform: translateY(-15px); }
+            @keyframes pulse {
+              0%, 100% { transform: scale(1); }
+              50% { transform: scale(1.1); }
             }
             @keyframes float {
               0%, 100% { transform: translateY(0px); }
-              50% { transform: translateY(10px); }
+              50% { transform: translateY(15px); }
             }
           `}</style>
         </div>
       </header>
 
-      {/* Section 1: Qu'est-ce que c'est */}
-      <section className="py-24 px-6 bg-white">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold text-blue-900 mb-6">
-              Qu'est-ce qu'un furet ?
+      {/* Section 1: La puissance du Boulon */}
+      <section className="py-32 px-6 bg-gradient-to-b from-transparent to-black/30">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-20">
+            <h2 className="text-6xl md:text-7xl font-black text-white mb-6 drop-shadow-lg" style={{
+              textShadow: '0 0 20px rgba(255, 0, 255, 0.8)'
+            }}>
+              Pourquoi le Boulon ?
             </h2>
-            <div className="w-20 h-1 bg-orange-500 mx-auto rounded-full"></div>
+            <div className="w-32 h-2 bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400 mx-auto rounded-full"></div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
             <div 
-              className="relative h-80 rounded-2xl overflow-hidden shadow-2xl"
+              className="relative h-96 rounded-2xl overflow-hidden shadow-2xl border-4 border-white/20"
               style={{
-                transform: `translateY(${Math.max(0, scrollY - 600) * 0.08}px)`,
+                transform: `translateY(${Math.max(0, scrollY - 800) * 0.08}px)`,
+                cursor: 'crosshair'
+              }}
+              onMouseMove={(e) => {
+                const rect = e.currentTarget.getBoundingClientRect();
+                const x = (e.clientX - rect.left - rect.width / 2) * 0.1;
+                const y = (e.clientY - rect.top - rect.height / 2) * 0.1;
+                e.currentTarget.style.transform = `translateY(${Math.max(0, scrollY - 800) * 0.08}px) rotateX(${y}deg) rotateY(${x}deg) scale(1.05)`;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = `translateY(${Math.max(0, scrollY - 800) * 0.08}px) rotateX(0deg) rotateY(0deg) scale(1)`;
+              }}
+              style={{
+                transition: 'transform 0.1s ease-out',
+                perspective: '1000px'
               }}
             >
               <img 
-                src="/images.jpg" 
-                alt="Furet plomberie" 
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=500&h=400&fit=crop" 
+                alt="Boulon brillant" 
+                className="w-full h-full object-cover"
               />
+              <div className="absolute inset-0 bg-gradient-to-tr from-pink-500/30 via-transparent to-cyan-500/30"></div>
             </div>
             
-            <div className="space-y-6">
-              <p className="text-xl text-gray-700 leading-relaxed">
-                Le <span className="font-bold text-orange-600">furet</span> est un ressort hélicoïdal flexible, l'allié indispensable de tout plombier.
-              </p>
+            <div className="space-y-8 text-white">
+              <div className="flex gap-4">
+                <Sparkles className="w-8 h-8 text-yellow-300 flex-shrink-0 mt-1" />
+                <div>
+                  <h3 className="text-2xl font-bold mb-2 text-pink-300">Solidité</h3>
+                  <p className="text-lg">Le boulon tient tout ensemble. C'est la force tranquille qui construit l'empire.</p>
+                </div>
+              </div>
               
-              <p className="text-xl text-gray-700 leading-relaxed">
-                C'est un outil mécanique robuste qui s'enroule dans vos tuyauteries pour déboucher les canalisations les plus récalcitrantes.
-              </p>
-              
-              <p className="text-xl text-gray-700 leading-relaxed">
-                <span className="font-bold text-blue-600">Simple, efficace et éprouvé</span> depuis des décennies, le furet reste le choix préféré des professionnels.
-              </p>
+              <div className="flex gap-4">
+                <Heart className="w-8 h-8 text-cyan-300 flex-shrink-0 mt-1" />
+                <div>
+                  <h3 className="text-2xl font-bold mb-2 text-cyan-300">Fiabilité</h3>
+                  <p className="text-lg">On peut compter sur lui. Le boulon ne lâche jamais, jamais.</p>
+                </div>
+              </div>
+
+              <div className="flex gap-4">
+                <Zap className="w-8 h-8 text-yellow-300 flex-shrink-0 mt-1" />
+                <div>
+                  <h3 className="text-2xl font-bold mb-2 text-yellow-300">Puissance</h3>
+                  <p className="text-lg">Simple mais efficace. Le boulon a changé le monde.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Section 2: Avantages */}
-      <section className="py-24 px-6 bg-gradient-to-br from-orange-50 to-orange-100">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold text-blue-900 mb-6">
-              Pourquoi choisir un furet ?
-            </h2>
-            <div className="w-20 h-1 bg-orange-500 mx-auto rounded-full"></div>
-          </div>
-          
+      {/* Section 2: Les types de boulons */}
+      <section className="py-32 px-6 bg-gradient-to-b from-black/30 to-transparent">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-6xl md:text-7xl font-black text-white text-center mb-20 drop-shadow-lg" style={{
+            textShadow: '0 0 20px rgba(0, 255, 255, 0.8)'
+          }}>
+            Les Légendes du Boulon
+          </h2>
+
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { icon: <Zap />, title: 'Rapide', desc: 'Débouche vos tuyaux en quelques minutes' },
-              { icon: <Trophy />, title: 'Efficace', desc: 'Élimine les bouchons les plus tenaces' },
-              { icon: <Wrench />, title: 'Écologique', desc: 'Pas de produits chimiques agressifs' }
+              { name: 'Le Classique', emoji: '⭐', desc: 'Intemporel et efficace' },
+              { name: 'Le Futuriste', emoji: '🚀', desc: 'Moderne et révolutionnaire' },
+              { name: 'L\'Exceptionnel', emoji: '💎', desc: 'Rare et précieux' }
             ].map((item, idx) => (
               <div 
                 key={idx}
-                className="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300"
-                style={{ animation: `slideIn 0.6s ease-out ${idx * 0.2}s backwards` }}
+                className="relative group"
+                style={{ animation: `slideUp 0.6s ease-out ${idx * 0.2}s backwards` }}
               >
-                <div className="text-orange-500 mb-4 mx-auto w-fit">
-                  {React.cloneElement(item.icon, { className: 'w-12 h-12' })}
+                <div 
+                  className="relative p-8 rounded-2xl bg-white/10 backdrop-blur-md border-2 border-white/30 hover:border-white/60 transition-all duration-300 h-full"
+                  onMouseMove={(e) => {
+                    const rect = e.currentTarget.getBoundingClientRect();
+                    const x = (e.clientX - rect.left - rect.width / 2) * 0.05;
+                    const y = (e.clientY - rect.top - rect.height / 2) * 0.05;
+                    e.currentTarget.style.transform = `perspective(1000px) rotateX(${y}deg) rotateY(${x}deg) scale(1.05)`;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
+                  }}
+                  style={{
+                    transition: 'transform 0.1s ease-out',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <div className="text-6xl mb-4">{item.emoji}</div>
+                  <h3 className="text-2xl font-bold text-white mb-2">{item.name}</h3>
+                  <p className="text-white/80">{item.desc}</p>
                 </div>
-                <h3 className="text-2xl font-bold text-blue-900 mb-3 text-center">{item.title}</h3>
-                <p className="text-gray-700 text-center">{item.desc}</p>
               </div>
             ))}
           </div>
 
           <style>{`
-            @keyframes slideIn {
+            @keyframes slideUp {
               from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(40px);
               }
               to {
                 opacity: 1;
@@ -148,90 +238,54 @@ export default function FuretPlomberie() {
         </div>
       </section>
 
-      {/* Section 3: Comment ça marche */}
-      <section className="py-24 px-6 bg-white">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold text-blue-900 mb-6">
-              Comment utiliser un furet ?
-            </h2>
-            <div className="w-20 h-1 bg-orange-500 mx-auto rounded-full"></div>
-          </div>
-          
-          <div className="space-y-6">
-            {[
-              { num: '1', step: 'Préparer', desc: 'Rassemblez votre équipement et mettez des gants de protection.' },
-              { num: '2', step: 'Insérer', desc: 'Guidez délicatement le furet dans le tuyau bouché.' },
-              { num: '3', step: 'Tourner', desc: 'Tournez la manivelle pour progresser et casser le bouchon.' },
-              { num: '4', step: 'Succès !', desc: 'Profitez d\'une canalisation débouchée et libre ! 🎉' }
-            ].map((item, idx) => (
-              <div 
-                key={idx}
-                className="flex gap-6 p-8 bg-gradient-to-r from-blue-50 to-orange-50 rounded-xl hover:from-blue-100 hover:to-orange-100 transition-all duration-300 border-l-4 border-orange-500"
-                style={{
-                  transform: `translateX(${Math.max(0, (scrollY - 2200 - idx * 100)) * 0.05}px)`,
-                }}
-              >
-                <div className="text-4xl font-bold text-orange-500 flex-shrink-0">{item.num}</div>
-                <div>
-                  <h3 className="text-2xl font-bold text-blue-900 mb-2">{item.step}</h3>
-                  <p className="text-gray-700">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Section 4: Image et témoignage */}
-      <section className="py-24 px-6 bg-gradient-to-br from-blue-900 to-blue-800">
+      {/* Section 3: Image avec parallax */}
+      <section className="py-32 px-6 bg-gradient-to-b from-transparent to-black/30">
         <div className="max-w-5xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div 
-              className="relative h-96 rounded-2xl overflow-hidden shadow-2xl"
-              style={{
-                transform: `translateY(${Math.max(0, scrollY - 3000) * 0.08}px)`,
-              }}
-            >
-              <img 
-                src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&h=400&fit=crop" 
-                alt="Plombier professionnel" 
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-              />
-            </div>
-            
-            <div className="text-white space-y-6">
-              <h2 className="text-4xl font-bold mb-6">
-                Recommandé par les professionnels
-              </h2>
-              
-              <p className="text-lg leading-relaxed">
-                Les plombiers professionnels font confiance aux furets depuis plus de 50 ans. C'est l'outil de base de tout atelier qui fonctionne.
-              </p>
-              
-              <p className="text-lg leading-relaxed">
-                Utilisé quotidiennement par des milliers de professionnels, le furet s'est avéré être le meilleur investissement pour déboucher efficacement et rapidement.
-              </p>
-              
-              <p className="text-lg italic text-orange-300">
-                "Un furet, c'est l'outil qui ne lâche jamais !" - Expert plomberie
-              </p>
+          <div 
+            className="relative h-96 rounded-2xl overflow-hidden shadow-2xl border-4 border-white/20"
+            style={{
+              transform: `translateY(${Math.max(0, scrollY - 2200) * 0.08}px)`,
+              cursor: 'pointer'
+            }}
+            onMouseMove={(e) => {
+              const rect = e.currentTarget.getBoundingClientRect();
+              const x = (e.clientX - rect.left - rect.width / 2) * 0.15;
+              const y = (e.clientY - rect.top - rect.height / 2) * 0.15;
+              e.currentTarget.style.transform = `translateY(${Math.max(0, scrollY - 2200) * 0.08}px) rotateX(${y}deg) rotateY(${x}deg) scale(1.08)`;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = `translateY(${Math.max(0, scrollY - 2200) * 0.08}px) rotateX(0deg) rotateY(0deg) scale(1)`;
+            }}
+            style={{
+              transition: 'transform 0.1s ease-out',
+              perspective: '1000px'
+            }}
+          >
+            <img 
+              src="/images.jpg" 
+              alt="Boulons en action" 
+              className="w-full h-full object-cover"
+            />
+            <div className="relative aspect-video w-full rounded-2xl overflow-hidden">
+              <p className="text-white text-2xl font-bold p-8">Assemblés. Unis. Indestructibles.</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Footer CTA */}
-      <section className="py-20 px-6 bg-white">
+      <section className="py-20 px-6 bg-gradient-to-b from-black/30 to-black/60">
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-4xl font-bold text-blue-900 mb-6">
-            Prêt à déboucher ? 🔧
+          <h2 className="text-5xl font-black text-white mb-6 drop-shadow-lg" style={{
+            textShadow: '0 0 20px rgba(255, 0, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.6)'
+          }}>
+            Rejoins le Mouvement 🔩
           </h2>
-          <p className="text-lg text-gray-600 mb-8">
-            Commandez votre furet dès maintenant et profitez d'une qualité professionnelle.
+          <p className="text-xl text-white/80 mb-8">
+            Crois au pouvoir du boulon. Change ta vie.
           </p>
-          <button className="px-10 py-4 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-lg font-bold rounded-full shadow-lg hover:shadow-xl transition-all transform hover:scale-105">
-            Commander maintenant
+          <button className="px-12 py-4 bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 hover:from-pink-600 hover:via-purple-600 hover:to-cyan-600 text-white text-lg font-bold rounded-full shadow-2xl hover:shadow-purple-500/50 transition-all transform hover:scale-110 border-2 border-white/50">
+            Découvrir ✨
           </button>
         </div>
       </section>
