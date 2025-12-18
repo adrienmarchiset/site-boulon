@@ -173,7 +173,9 @@ export default function BoulonSite() {
               className="relative h-96 rounded-2xl overflow-hidden shadow-2xl border-4 border-white/20"
               style={{
                 transform: `translateY(${Math.max(0, scrollY - 800) * 0.08}px)`,
-                cursor: 'crosshair'
+                cursor: 'crosshair',
+                transition: 'transform 0.1s ease-out',
+                perspective: '1000px'
               }}
               onMouseMove={(e: React.MouseEvent<HTMLDivElement>) => {
                 const rect = e.currentTarget.getBoundingClientRect();
@@ -183,10 +185,6 @@ export default function BoulonSite() {
               }}
               onMouseLeave={(e: React.MouseEvent<HTMLDivElement>) => {
                 e.currentTarget.style.transform = `translateY(${Math.max(0, scrollY - 800) * 0.08}px) rotateX(0deg) rotateY(0deg) scale(1)`;
-              }}
-              style={{
-                transition: 'transform 0.1s ease-out',
-                perspective: '1000px'
               }}
             >
               <img 
