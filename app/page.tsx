@@ -10,7 +10,7 @@ export default function BoulonSite() {
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       setMousePos({ x: e.clientX, y: e.clientY });
       
       // Créer des paillettes au mouvement de la souris
@@ -132,7 +132,7 @@ export default function BoulonSite() {
             fontStyle: 'italic',
             letterSpacing: '0.1em'
           }}>
-            ~ Si tu n'as pas un boulon à 50 ans, tu as raté ta vie ~
+            ~ Le vrai secret est dans les détails ~
           </p>
 
           <div 
@@ -308,7 +308,7 @@ export default function BoulonSite() {
             }}
           >
             <img 
-              src="/images.jpg" 
+              src="https://images.unsplash.com/photo-1572517190154-319a4818eb0e?w=800&h=400&fit=crop" 
               alt="Boulons en action" 
               className="w-full h-full object-cover"
             />
