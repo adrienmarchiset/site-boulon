@@ -6,7 +6,7 @@ import { Zap, Sparkles, Heart } from 'lucide-react';
 export default function BoulonSite() {
   const [scrollY, setScrollY] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [sparkles, setSparkles] = useState([]);
+  const [sparkles, setSparkles] = useState<Array<{ id: number; x: number; y: number; color: string; size: number }>>([]);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -86,6 +86,7 @@ export default function BoulonSite() {
           }
         }
       `}</style>
+
       {/* Header Hero */}
       <header className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 opacity-20">
@@ -132,7 +133,7 @@ export default function BoulonSite() {
             fontStyle: 'italic',
             letterSpacing: '0.1em'
           }}>
-            ~ Le vrai secret est dans les détails ~
+            ~ Si tu n'as pas un boulon à 50 ans, tu as raté ta vie. ~
           </p>
 
           <div 
@@ -174,13 +175,13 @@ export default function BoulonSite() {
                 transform: `translateY(${Math.max(0, scrollY - 800) * 0.08}px)`,
                 cursor: 'crosshair'
               }}
-              onMouseMove={(e) => {
+              onMouseMove={(e: React.MouseEvent<HTMLDivElement>) => {
                 const rect = e.currentTarget.getBoundingClientRect();
                 const x = (e.clientX - rect.left - rect.width / 2) * 0.1;
                 const y = (e.clientY - rect.top - rect.height / 2) * 0.1;
                 e.currentTarget.style.transform = `translateY(${Math.max(0, scrollY - 800) * 0.08}px) rotateX(${y}deg) rotateY(${x}deg) scale(1.05)`;
               }}
-              onMouseLeave={(e) => {
+              onMouseLeave={(e: React.MouseEvent<HTMLDivElement>) => {
                 e.currentTarget.style.transform = `translateY(${Math.max(0, scrollY - 800) * 0.08}px) rotateX(0deg) rotateY(0deg) scale(1)`;
               }}
               style={{
@@ -247,13 +248,13 @@ export default function BoulonSite() {
               >
                 <div 
                   className="relative p-8 rounded-2xl bg-white/10 backdrop-blur-md border-2 border-white/30 hover:border-white/60 transition-all duration-300 h-full"
-                  onMouseMove={(e) => {
+                  onMouseMove={(e: React.MouseEvent<HTMLDivElement>) => {
                     const rect = e.currentTarget.getBoundingClientRect();
                     const x = (e.clientX - rect.left - rect.width / 2) * 0.05;
                     const y = (e.clientY - rect.top - rect.height / 2) * 0.05;
                     e.currentTarget.style.transform = `perspective(1000px) rotateX(${y}deg) rotateY(${x}deg) scale(1.05)`;
                   }}
-                  onMouseLeave={(e) => {
+                  onMouseLeave={(e: React.MouseEvent<HTMLDivElement>) => {
                     e.currentTarget.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
                   }}
                   style={{
@@ -293,13 +294,13 @@ export default function BoulonSite() {
               transform: `translateY(${Math.max(0, scrollY - 2200) * 0.08}px)`,
               cursor: 'pointer'
             }}
-            onMouseMove={(e) => {
+            onMouseMove={(e: React.MouseEvent<HTMLDivElement>) => {
               const rect = e.currentTarget.getBoundingClientRect();
               const x = (e.clientX - rect.left - rect.width / 2) * 0.15;
               const y = (e.clientY - rect.top - rect.height / 2) * 0.15;
               e.currentTarget.style.transform = `translateY(${Math.max(0, scrollY - 2200) * 0.08}px) rotateX(${y}deg) rotateY(${x}deg) scale(1.08)`;
             }}
-            onMouseLeave={(e) => {
+            onMouseLeave={(e: React.MouseEvent<HTMLDivElement>) => {
               e.currentTarget.style.transform = `translateY(${Math.max(0, scrollY - 2200) * 0.08}px) rotateX(0deg) rotateY(0deg) scale(1)`;
             }}
             style={{
@@ -308,7 +309,7 @@ export default function BoulonSite() {
             }}
           >
             <img 
-              src="https://images.unsplash.com/photo-1572517190154-319a4818eb0e?w=800&h=400&fit=crop" 
+              src="/images.jpg" 
               alt="Boulons en action" 
               className="w-full h-full object-cover"
             />
