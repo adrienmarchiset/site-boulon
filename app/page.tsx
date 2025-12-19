@@ -289,7 +289,7 @@ export default function BoulonSite() {
       <section className="py-32 px-6 bg-gradient-to-b from-transparent to-black/30">
         <div className="max-w-5xl mx-auto">
           <div 
-            className="relative h-96 rounded-2xl overflow-hidden shadow-2xl border-4 border-white/20"
+            className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white/20 inline-block w-full"
             style={{
               transform: `translateY(${Math.max(0, scrollY - 2200) * 0.08}px)`,
               perspective: '1000px'
@@ -305,9 +305,9 @@ export default function BoulonSite() {
             }}
           >
             <img 
-              src="https://images.unsplash.com/photo-1572517190154-319a4818eb0e?w=800&h=400&fit=crop" 
+              src="/images.jpg" 
               alt="Boulons en action" 
-              className="w-full h-full object-cover"
+              className="w-full h-auto block"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end">
               <p className="text-white text-2xl font-bold p-8">Assemblés. Unis. Indestructibles.</p>
