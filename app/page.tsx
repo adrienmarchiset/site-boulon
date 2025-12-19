@@ -80,25 +80,7 @@ export default function BoulonSite() {
         }
       `}</style>
 
-      {/* Paillettes animées */}
-      <div className="fixed inset-0 pointer-events-none z-50">
-        {sparkles.map(sparkle => (
-          <div
-            key={sparkle.id}
-            className="absolute rounded-full"
-            style={{
-              left: `${sparkle.x}px`,
-              top: `${sparkle.y}px`,
-              width: `${sparkle.size}px`,
-              height: `${sparkle.size}px`,
-              backgroundColor: sparkle.color,
-              boxShadow: `0 0 ${sparkle.size * 3}px ${sparkle.color}`,
-              animation: 'sparkleFloat 1s ease-out forwards',
-              opacity: 0.8
-            }}
-          />
-        ))}
-      </div>
+
 
       {/* Header Hero */}
       <header className="relative h-screen flex items-center justify-center overflow-hidden">
