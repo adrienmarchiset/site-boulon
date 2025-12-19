@@ -8,25 +8,10 @@ export default function BoulonSite() {
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
-    const handleMouseMove = (e: MouseEvent) => {
-      if (Math.random() > 0.7) {
-        const colors = ['#FF00FF', '#00FFFF', '#FFFF00', '#FF0080', '#00FF80', '#FF8000'];
-        const newSparkle = {
-          id: Date.now() + Math.random(),
-          x: e.clientX,
-          y: e.clientY,
-          color: colors[Math.floor(Math.random() * colors.length)],
-          size: Math.random() * 3 + 2
-        };
-        setSparkles(prev => [...prev.slice(-30), newSparkle]);
-      }
-    };
     
     window.addEventListener('scroll', handleScroll);
-    window.addEventListener('mousemove', handleMouseMove);
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
 
@@ -49,16 +34,6 @@ export default function BoulonSite() {
       }}
     >
       <style>{`
-        @keyframes sparkleFloat {
-          0% {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
-          100% {
-            opacity: 0;
-            transform: translateY(-50px) scale(0);
-          }
-        }
         @keyframes pulse {
           0%, 100% { transform: scale(1); }
           50% { transform: scale(1.1); }
@@ -78,8 +53,6 @@ export default function BoulonSite() {
           }
         }
       `}</style>
-
-
 
       {/* Header Hero */}
       <header className="relative h-screen flex items-center justify-center overflow-hidden">
@@ -157,18 +130,18 @@ export default function BoulonSite() {
                 transform: `translateY(${Math.max(0, scrollY - 800) * 0.08}px)`,
                 perspective: '1000px'
               }}
-              onMouseMove={(e) => {
+              onMouseMove={(e: React.MouseEvent<HTMLDivElement>) => {
                 const rect = e.currentTarget.getBoundingClientRect();
                 const x = (e.clientX - rect.left - rect.width / 2) * 0.08;
                 const y = (e.clientY - rect.top - rect.height / 2) * 0.08;
                 e.currentTarget.style.transform = `translateY(${Math.max(0, scrollY - 800) * 0.08}px) perspective(1000px) rotateX(${y}deg) rotateY(${x}deg) scale(1.05)`;
               }}
-              onMouseLeave={(e) => {
+              onMouseLeave={(e: React.MouseEvent<HTMLDivElement>) => {
                 e.currentTarget.style.transform = `translateY(${Math.max(0, scrollY - 800) * 0.08}px)`;
               }}
             >
               <img 
-                src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=500&h=500&fit=crop&crop=center" 
+                src="/images.jpg" 
                 alt="Boulon brillant" 
                 className="w-auto h-full object-contain drop-shadow-2xl"
               />
@@ -242,13 +215,13 @@ export default function BoulonSite() {
               >
                 <div 
                   className="relative p-8 rounded-2xl bg-white/10 backdrop-blur-md border-2 border-white/30 hover:border-white/60 transition-all duration-300 h-full"
-                  onMouseMove={(e) => {
+                  onMouseMove={(e: React.MouseEvent<HTMLDivElement>) => {
                     const rect = e.currentTarget.getBoundingClientRect();
                     const x = (e.clientX - rect.left - rect.width / 2) * 0.05;
                     const y = (e.clientY - rect.top - rect.height / 2) * 0.05;
                     e.currentTarget.style.transform = `perspective(1000px) rotateX(${y}deg) rotateY(${x}deg) scale(1.05)`;
                   }}
-                  onMouseLeave={(e) => {
+                  onMouseLeave={(e: React.MouseEvent<HTMLDivElement>) => {
                     e.currentTarget.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
                   }}
                   style={{
@@ -275,20 +248,20 @@ export default function BoulonSite() {
               transform: `translateY(${Math.max(0, scrollY - 2200) * 0.08}px)`,
               perspective: '1000px'
             }}
-            onMouseMove={(e) => {
+            onMouseMove={(e: React.MouseEvent<HTMLDivElement>) => {
               const rect = e.currentTarget.getBoundingClientRect();
               const x = (e.clientX - rect.left - rect.width / 2) * 0.15;
               const y = (e.clientY - rect.top - rect.height / 2) * 0.15;
               e.currentTarget.style.transform = `translateY(${Math.max(0, scrollY - 2200) * 0.08}px) perspective(1000px) rotateX(${y}deg) rotateY(${x}deg) scale(1.08)`;
             }}
-            onMouseLeave={(e) => {
+            onMouseLeave={(e: React.MouseEvent<HTMLDivElement>) => {
               e.currentTarget.style.transform = `translateY(${Math.max(0, scrollY - 2200) * 0.08}px) rotateX(0deg) rotateY(0deg) scale(1)`;
             }}
           >
             <img 
-              src="/images.jpg" 
+              src="https://images.unsplash.com/photo-1572517190154-319a4818eb0e?w=800&h=400&fit=crop" 
               alt="Boulons en action" 
-              className="w-full h-auto block"
+              className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end">
               <p className="text-white text-2xl font-bold p-8">Assemblés. Unis. Indestructibles.</p>
