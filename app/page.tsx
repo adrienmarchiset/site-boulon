@@ -5,15 +5,11 @@ import { Zap, Sparkles, Heart } from 'lucide-react';
 
 export default function BoulonSite() {
   const [scrollY, setScrollY] = useState(0);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [sparkles, setSparkles] = useState([]);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
     const handleMouseMove = (e) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
-      
-      // Créer des paillettes au mouvement de la souris
       if (Math.random() > 0.7) {
         const colors = ['#FF00FF', '#00FFFF', '#FFFF00', '#FF0080', '#00FF80', '#FF8000'];
         const newSparkle = {
@@ -35,7 +31,6 @@ export default function BoulonSite() {
     };
   }, []);
 
-  // Gradient qui change selon le scroll
   const getBackgroundGradient = () => {
     const scroll = Math.min(scrollY / 2000, 1);
     return `linear-gradient(135deg, 
@@ -54,12 +49,43 @@ export default function BoulonSite() {
         transition: 'background 0.1s ease-out'
       }}
     >
+      <style>{`
+        @keyframes sparkleFloat {
+          0% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+          100% {
+            opacity: 0;
+            transform: translateY(-50px) scale(0);
+          }
+        }
+        @keyframes pulse {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.1); }
+        }
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(15px); }
+        }
+        @keyframes slideUp {
+          from {
+            opacity: 0;
+            transform: translateY(40px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
+
       {/* Paillettes animées */}
       <div className="fixed inset-0 pointer-events-none z-50">
         {sparkles.map(sparkle => (
           <div
             key={sparkle.id}
-            className="absolute rounded-full animate-pulse"
+            className="absolute rounded-full"
             style={{
               left: sparkle.x,
               top: sparkle.y,
@@ -74,18 +100,6 @@ export default function BoulonSite() {
         ))}
       </div>
 
-      <style>{`
-        @keyframes sparkleFloat {
-          0% {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
-          100% {
-            opacity: 0;
-            transform: translateY(-50px) scale(0);
-          }
-        }
-      `}</style>
       {/* Header Hero */}
       <header className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 opacity-20">
@@ -111,25 +125,24 @@ export default function BoulonSite() {
               filter: 'drop-shadow(0 0 20px rgba(255,255,255,0.8))'
             }}
           >
-            <Zap className="w-32 h-32 text-white drop-shadow-lg" />
+            <Zap className="w-32 h-32 text-white" />
           </div>
           
-          <h1 className="text-8xl md:text-9xl font-black text-white mb-8 drop-shadow-lg" style={{
+          <h1 className="text-8xl md:text-9xl font-black text-white mb-8" style={{
             textShadow: '0 0 30px rgba(255, 0, 255, 0.8), 0 0 60px rgba(0, 255, 255, 0.6)',
             letterSpacing: '0.05em'
           }}>
             LE BOULON
           </h1>
           
-          <p className="text-2xl md:text-4xl text-white font-bold mb-6 drop-shadow-lg" style={{
+          <p className="text-2xl md:text-4xl text-white font-bold mb-6" style={{
             textShadow: '0 0 20px rgba(255, 255, 0, 0.8)',
           }}>
             L'élément indispensable pour réussir
           </p>
           
-          <p className="text-xl md:text-2xl text-white italic font-light mb-12 drop-shadow-lg" style={{
+          <p className="text-xl md:text-2xl text-white italic font-light mb-12" style={{
             textShadow: '0 0 15px rgba(0, 255, 255, 0.8)',
-            fontStyle: 'italic',
             letterSpacing: '0.1em'
           }}>
             ~ Le vrai secret est dans les détails ~
@@ -141,17 +154,6 @@ export default function BoulonSite() {
           >
             ↓
           </div>
-
-          <style>{`
-            @keyframes pulse {
-              0%, 100% { transform: scale(1); }
-              50% { transform: scale(1.1); }
-            }
-            @keyframes float {
-              0%, 100% { transform: translateY(0px); }
-              50% { transform: translateY(15px); }
-            }
-          `}</style>
         </div>
       </header>
 
@@ -159,7 +161,7 @@ export default function BoulonSite() {
       <section className="py-32 px-6 bg-gradient-to-b from-transparent to-black/30">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-20">
-            <h2 className="text-6xl md:text-7xl font-black text-white mb-6 drop-shadow-lg" style={{
+            <h2 className="text-6xl md:text-7xl font-black text-white mb-6" style={{
               textShadow: '0 0 20px rgba(255, 0, 255, 0.8)'
             }}>
               Pourquoi le Boulon ?
@@ -169,31 +171,27 @@ export default function BoulonSite() {
 
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div 
-              className="relative h-96 rounded-2xl overflow-hidden shadow-2xl border-4 border-white/20"
+              className="relative w-full h-80 rounded-2xl overflow-hidden shadow-2xl border-4 border-white/20 flex items-center justify-center bg-white/5"
               style={{
                 transform: `translateY(${Math.max(0, scrollY - 800) * 0.08}px)`,
-                cursor: 'crosshair'
+                perspective: '1000px'
               }}
               onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
-                const x = (e.clientX - rect.left - rect.width / 2) * 0.1;
-                const y = (e.clientY - rect.top - rect.height / 2) * 0.1;
-                e.currentTarget.style.transform = `translateY(${Math.max(0, scrollY - 800) * 0.08}px) rotateX(${y}deg) rotateY(${x}deg) scale(1.05)`;
+                const x = (e.clientX - rect.left - rect.width / 2) * 0.08;
+                const y = (e.clientY - rect.top - rect.height / 2) * 0.08;
+                e.currentTarget.style.transform = `translateY(${Math.max(0, scrollY - 800) * 0.08}px) perspective(1000px) rotateX(${y}deg) rotateY(${x}deg) scale(1.05)`;
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.transform = `translateY(${Math.max(0, scrollY - 800) * 0.08}px) rotateX(0deg) rotateY(0deg) scale(1)`;
-              }}
-              style={{
-                transition: 'transform 0.1s ease-out',
-                perspective: '1000px'
+                e.currentTarget.style.transform = `translateY(${Math.max(0, scrollY - 800) * 0.08}px)`;
               }}
             >
               <img 
-                src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=500&h=400&fit=crop" 
+                src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=500&h=500&fit=crop&crop=center" 
                 alt="Boulon brillant" 
-                className="w-full h-full object-cover"
+                className="w-auto h-full object-contain drop-shadow-2xl"
               />
-              <div className="absolute inset-0 bg-gradient-to-tr from-pink-500/30 via-transparent to-cyan-500/30"></div>
+              <div className="absolute inset-0 bg-gradient-to-tr from-pink-500/20 via-transparent to-cyan-500/20 pointer-events-none"></div>
             </div>
             
             <div className="space-y-8 text-white">
@@ -225,10 +223,26 @@ export default function BoulonSite() {
         </div>
       </section>
 
+      {/* Section Citation */}
+      <section className="py-32 px-6 bg-gradient-to-b from-black/20 to-black/40">
+        <div className="max-w-3xl mx-auto text-center">
+          <div className="relative">
+            <div className="text-6xl text-pink-400 mb-6 opacity-40">"</div>
+            <p className="text-4xl md:text-5xl font-black text-white mb-6 leading-tight" style={{
+              textShadow: '0 0 30px rgba(255, 0, 255, 0.8), 0 0 60px rgba(0, 255, 255, 0.6)',
+            }}>
+              Si tu n'as pas un boulon à 50 ans, tu as raté ta vie.
+            </p>
+            <div className="w-20 h-1 bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 mx-auto rounded-full"></div>
+            <p className="text-white text-xl mt-6 font-light">~ La sagesse du boulon ~</p>
+          </div>
+        </div>
+      </section>
+
       {/* Section 2: Les types de boulons */}
       <section className="py-32 px-6 bg-gradient-to-b from-black/30 to-transparent">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-6xl md:text-7xl font-black text-white text-center mb-20 drop-shadow-lg" style={{
+          <h2 className="text-6xl md:text-7xl font-black text-white text-center mb-20" style={{
             textShadow: '0 0 20px rgba(0, 255, 255, 0.8)'
           }}>
             Les Légendes du Boulon
@@ -268,19 +282,6 @@ export default function BoulonSite() {
               </div>
             ))}
           </div>
-
-          <style>{`
-            @keyframes slideUp {
-              from {
-                opacity: 0;
-                transform: translateY(40px);
-              }
-              to {
-                opacity: 1;
-                transform: translateY(0);
-              }
-            }
-          `}</style>
         </div>
       </section>
 
@@ -291,20 +292,16 @@ export default function BoulonSite() {
             className="relative h-96 rounded-2xl overflow-hidden shadow-2xl border-4 border-white/20"
             style={{
               transform: `translateY(${Math.max(0, scrollY - 2200) * 0.08}px)`,
-              cursor: 'pointer'
+              perspective: '1000px'
             }}
             onMouseMove={(e) => {
               const rect = e.currentTarget.getBoundingClientRect();
               const x = (e.clientX - rect.left - rect.width / 2) * 0.15;
               const y = (e.clientY - rect.top - rect.height / 2) * 0.15;
-              e.currentTarget.style.transform = `translateY(${Math.max(0, scrollY - 2200) * 0.08}px) rotateX(${y}deg) rotateY(${x}deg) scale(1.08)`;
+              e.currentTarget.style.transform = `translateY(${Math.max(0, scrollY - 2200) * 0.08}px) perspective(1000px) rotateX(${y}deg) rotateY(${x}deg) scale(1.08)`;
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = `translateY(${Math.max(0, scrollY - 2200) * 0.08}px) rotateX(0deg) rotateY(0deg) scale(1)`;
-            }}
-            style={{
-              transition: 'transform 0.1s ease-out',
-              perspective: '1000px'
             }}
           >
             <img 
@@ -322,7 +319,7 @@ export default function BoulonSite() {
       {/* Footer CTA */}
       <section className="py-20 px-6 bg-gradient-to-b from-black/30 to-black/60">
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-5xl font-black text-white mb-6 drop-shadow-lg" style={{
+          <h2 className="text-5xl font-black text-white mb-6" style={{
             textShadow: '0 0 20px rgba(255, 0, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.6)'
           }}>
             Rejoins le Mouvement 🔩
@@ -330,7 +327,7 @@ export default function BoulonSite() {
           <p className="text-xl text-white/80 mb-8">
             Crois au pouvoir du boulon. Change ta vie.
           </p>
-          <button className="px-12 py-4 bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 hover:from-pink-600 hover:via-purple-600 hover:to-cyan-600 text-white text-lg font-bold rounded-full shadow-2xl hover:shadow-purple-500/50 transition-all transform hover:scale-110 border-2 border-white/50">
+          <button className="px-12 py-4 bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 hover:from-pink-600 hover:via-purple-600 hover:to-cyan-600 text-white text-lg font-bold rounded-full shadow-2xl transition-all transform hover:scale-110 border-2 border-white/50">
             Découvrir ✨
           </button>
         </div>
