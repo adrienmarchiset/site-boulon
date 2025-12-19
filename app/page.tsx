@@ -5,7 +5,6 @@ import { Zap, Sparkles, Heart } from 'lucide-react';
 
 export default function BoulonSite() {
   const [scrollY, setScrollY] = useState(0);
-  const [sparkles, setSparkles] = useState([]);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
