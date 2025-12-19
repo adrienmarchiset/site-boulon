@@ -9,7 +9,7 @@ export default function BoulonSite() {
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       if (Math.random() > 0.7) {
         const colors = ['#FF00FF', '#00FFFF', '#FFFF00', '#FF0080', '#00FF80', '#FF8000'];
         const newSparkle = {
